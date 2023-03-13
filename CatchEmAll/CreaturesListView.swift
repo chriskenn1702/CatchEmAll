@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  CreaturesListView.swift
 //  CatchEmAll
 //
 //  Created by Christopher Kennedy on 3/12/23.
@@ -11,11 +11,9 @@ struct CreaturesListView: View {
     var creatures = ["Pikachu", "Squirtle", "Charzard", "Snorlax"]
     var body: some View {
         NavigationStack{
-            List(){
-                ForEach(creatures, id: \.self) {creature in
+            List(creatures, id: \.self){creature in
                     Text(creature)
                         .font(.title2)
-                }
             }
             .listStyle(.plain)
             .navigationTitle("Pokemon")
