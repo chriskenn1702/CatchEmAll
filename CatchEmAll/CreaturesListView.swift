@@ -8,15 +8,17 @@
 import SwiftUI
 
 struct CreaturesListView: View {
-    var creatures = ["Pikachu", "Squirtle", "Charzard", "Snorlax"]
+    @StateObject var creaturesVM = CreaturesViewModel()
     var body: some View {
         NavigationStack{
-            List(creatures, id: \.self){creature in
-                    Text(creature)
-                        .font(.title2)
+            List(creaturesVM.creaturesArray, id: \.self) { creature in
+                Text(creature.name)
             }
             .listStyle(.plain)
             .navigationTitle("Pokemon")
+        }
+        .task {
+            await creaturesVM.getData()
         }
     }
 }
