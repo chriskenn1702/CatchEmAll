@@ -12,7 +12,13 @@ struct CreaturesListView: View {
     var body: some View {
         NavigationStack{
             List(creaturesVM.creaturesArray, id: \.self) { creature in
-                Text(creature.name)
+                NavigationLink {
+                    DetailView(creature: creature)
+                } label: {
+                    Text(creature.name.capitalized)
+                        .font(.title2)
+                }
+                
             }
             .listStyle(.plain)
             .navigationTitle("Pokemon")
