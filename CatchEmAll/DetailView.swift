@@ -38,9 +38,10 @@ struct DetailView: View {
                         }
                         .padding(.trailing)
                 } placeholder: {
-                    RoundedRectangle(cornerRadius: 10)
+                    Rectangle()
                         .foregroundColor(.clear)
                         .frame(maxWidth: 96, maxHeight: 96)
+                        .padding(.trailing)
                 }
 
 //                Image(systemName: "figure.run.circle")
