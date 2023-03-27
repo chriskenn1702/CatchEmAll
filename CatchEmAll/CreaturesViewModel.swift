@@ -46,6 +46,13 @@ class CreaturesViewModel: ObservableObject{
             print("ERROR: Could not use URL at \(urlString) to get data and response")
             isLoading = false
         }
+       
+    }
+    func loadAll() async{
+        guard urlString.hasPrefix("http") else {return}
+        
+        await getData()
+        await loadAll()
     }
     
 }
