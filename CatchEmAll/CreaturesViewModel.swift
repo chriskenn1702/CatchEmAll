@@ -46,7 +46,18 @@ class CreaturesViewModel: ObservableObject{
             print("ERROR: Could not use URL at \(urlString) to get data and response")
             isLoading = false
         }
-       
+        
+    }
+    
+    func loadNextIfNeeded(creature: Creature){
+        guard let lastCreature = creaturesArray.last else{
+            return
+        }
+        if creature.id == lastCreature.id && urlString.hasPrefix("http"){
+            Task{
+                await getData()
+            }
+        }
     }
     func loadAll() async{
         guard urlString.hasPrefix("http") else {return}
