@@ -24,38 +24,8 @@ struct DetailView: View {
                 .padding(.bottom)
             
             HStack{
-                AsyncImage(url: URL(string: creatureDetailVM.imageURL)) { image in
-                    image
-                        .resizable()
-                        .scaledToFit()
-                        .background(.white)
-                        .frame(maxWidth: 96)
-                        .cornerRadius(16)
-                        .shadow(radius: 8, x: 5, y: 5)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 16)
-                                .stroke(.gray.opacity(0.5), lineWidth: 1)
-                        }
-                        .padding(.trailing)
-                } placeholder: {
-                    Rectangle()
-                        .foregroundColor(.clear)
-                        .frame(maxWidth: 96, maxHeight: 96)
-                        .padding(.trailing)
-                }
-
-//                Image(systemName: "figure.run.circle")
-//                    .resizable()
-//                    .scaledToFit()
-//                    .backgroundStyle(.white)
-//                    .frame(maxWidth: 96)
-//                    .cornerRadius(16)
-//                    .shadow(radius: 8, x: 5, y: 5)
-//                    .overlay {
-//                        RoundedRectangle(cornerRadius: 16)
-//                            .stroke(.gray.opacity(0.5), lineWidth: 1)
-//                    }
-//                    .padding(.trailing)
+                
+                creatureImage
                 
                 VStack (alignment: .leading){
                     HStack (alignment: .top) {
@@ -89,6 +59,45 @@ struct DetailView: View {
         .task {
             creatureDetailVM.urlString = creature.url
             await creatureDetailVM.getData()
+        }
+    }
+}
+
+extension DetailView{
+    var creatureImage: some View{
+        AsyncImage(url: URL(string: creatureDetailVM.imageURL)) { phase in
+            if let image = phase.image{
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .background(.white)
+                    .frame(maxWidth: 96)
+                    .cornerRadius(16)
+                    .shadow(radius: 8, x: 5, y: 5)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(.gray.opacity(0.5), lineWidth: 1)
+                    }
+                    .padding(.trailing)
+            } else if phase.error != nil{
+                Image(systemName: "questionmark.square.dashed")
+                    .resizable()
+                    .scaledToFit()
+                    .background(.white)
+                    .frame(maxWidth: 96)
+                    .cornerRadius(16)
+                    .shadow(radius: 8, x: 5, y: 5)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(.gray.opacity(0.5), lineWidth: 1)
+                    }
+                    .padding(.trailing)
+            } else{
+                Rectangle()
+                    .foregroundColor(.clear)
+                    .frame(maxWidth: 96, maxHeight: 96)
+                    .padding(.trailing)
+            }
         }
     }
 }
